@@ -15,14 +15,15 @@ tb_daily as (
         date(substr(DtCriacao,0,11)) as dtDia
     ,   idCliente
     from transacoes
+    where DtCriacao < '{date}'
 ),
 tb_idade as (
     select 
         idCliente
 --    ,   min(dtDia) as dtPrimeiraTransacao
-    ,   CAST(max(julianday('now')-julianday(dtDia)) as int) as qtdDiasPrimeiraTransacao
+    ,   CAST(max(julianday('{date}')-julianday(dtDia)) as int) as qtdDiasPrimeiraTransacao
 --    ,   max(dtDia) as dtUltimaTransacao   
-    ,   CAST(min(julianday('now')-julianday(dtDia)) as int) as qtdDiasUltimaTransacao
+    ,   CAST(min(julianday('{date}')-julianday(dtDia)) as int) as qtdDiasUltimaTransacao
     from tb_daily
     group by idCliente
 ),
@@ -55,7 +56,7 @@ tb_life_cycle as (
 )
 
 select 
-    date('2025-11-14', '-1 day') dtRef
+    date('{date}', '-1 day') dtRef
 ,   *
 from tb_life_cycle
 
