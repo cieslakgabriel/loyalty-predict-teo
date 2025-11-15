@@ -6,7 +6,6 @@ SELECT DISTINCT
     date(substr(DtCriacao,0,11)) as DtDia
 ,   idCliente
 from transacoes
-order by DtDia
 ),
 tb_distinct_day as (
  select 
@@ -23,4 +22,3 @@ on t2.DtDia <= t1.dtref
 and julianday(t1.dtref) - julianday(t2.DtDia) < 28
 group by t1.dtRef
 order by t1.dtRef asc
-
